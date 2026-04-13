@@ -26,7 +26,7 @@ body {
 }
 
 .slide-container {
-  height: 100vh;
+  min-height: 100vh;
   width: 100vw;
   scroll-snap-align: start;
   display: flex;
@@ -34,8 +34,8 @@ body {
   align-items: center;
   justify-content: center;
   position: relative;
-  overflow: hidden;
-  padding: 60px;
+  overflow-y: auto;
+  padding: 40px 20px;
   background-color: #07070a;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
@@ -48,7 +48,7 @@ body {
   pointer-events: none;
 }
 
-/* 2. TIPOGRAFÍA */
+/* 2. TIPOGRAFÍA REPOSNSIVA */
 h1, h2, h3 {
   color: #ffffff;
   font-family: 'Montserrat', sans-serif;
@@ -62,7 +62,7 @@ h1, h2, h3 {
 }
 
 h1 {
-  font-size: clamp(40px, 8vw, 80px);
+  font-size: clamp(32px, 8vw, 80px);
   font-weight: 900;
   line-height: 1.1;
   background: linear-gradient(135deg, #ffffff 0%, #a1a1aa 100%);
@@ -71,26 +71,26 @@ h1 {
 }
 
 .slide-title {
-  font-size: 42px;
+  font-size: clamp(24px, 5vw, 42px);
   font-weight: 800;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
   text-align: left;
   width: 100%;
   border-left: 5px solid #00f3ff;
-  padding-left: 20px;
+  padding-left: 15px;
   letter-spacing: 1px;
 }
 
 .subtitle {
   color: #00f3ff;
-  font-size: 18px;
+  font-size: clamp(12px, 2vw, 18px);
   font-weight: 700;
-  letter-spacing: 6px;
-  margin-bottom: 20px;
+  letter-spacing: 4px;
+  margin-bottom: 15px;
   text-transform: uppercase;
 }
 
-p, li { font-size: 21px; line-height: 1.5; font-weight: 300; }
+p, li { font-size: clamp(16px, 2.5vw, 21px); line-height: 1.5; font-weight: 300; }
 
 .content-area {
   display: flex;
@@ -98,21 +98,29 @@ p, li { font-size: 21px; line-height: 1.5; font-weight: 300; }
   flex-grow: 1;
   justify-content: center;
   width: 100%;
+  max-width: 1200px;
   z-index: 10;
 }
 
-/* 3. LAYOUTS */
+/* 3. LAYOUTS RESPONSIVOS */
 .two-column {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 50px;
+  grid-template-columns: 1fr;
+  gap: 30px;
   width: 100%;
   align-items: center;
 }
 
+@media (min-width: 768px) {
+  .two-column {
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+  }
+}
+
 .image-wrapper {
   border-radius: 16px;
-  height: 450px;
+  height: clamp(250px, 40vh, 450px);
   width: 100%;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -124,37 +132,54 @@ p, li { font-size: 21px; line-height: 1.5; font-weight: 300; }
 
 .tiled-content {
   display: flex;
-  gap: 30px;
+  flex-direction: column;
+  gap: 20px;
   width: 100%;
+}
+
+@media (min-width: 768px) {
+  .tiled-content {
+    flex-direction: row;
+    gap: 30px;
+  }
 }
 
 .tile {
   background: rgba(20, 20, 25, 0.6);
   border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 40px 30px;
+  padding: 30px 20px;
   flex: 1;
   text-align: center;
 }
 
 .tile .icon {
-  font-size: 36px;
+  font-size: 30px;
   color: #00f3ff;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   display: block;
 }
 
-/* Bleed Image Right */
+/* Bleed Layout Responsivo */
 .slide-container.bleed-image-layout {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: 1fr;
   padding: 0;
-  align-items: start;
+  align-items: center;
 }
 
-.bleed-content-container { padding: 80px; align-self: center; }
+@media (min-width: 768px) {
+  .slide-container.bleed-image-layout {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+}
 
-.bleed-image-container { height: 100vh; overflow: hidden; position: relative; }
+.bleed-content-container { padding: 40px 20px; }
+@media (min-width: 768px) { .bleed-content-container { padding: 80px; } }
+
+.bleed-image-container { height: 40vh; overflow: hidden; position: relative; }
+@media (min-width: 768px) { .bleed-image-container { height: 100vh; } }
 
 .bleed-image-container img { height: 100%; width: 100%; object-fit: cover; }
 
@@ -162,13 +187,20 @@ p, li { font-size: 21px; line-height: 1.5; font-weight: 300; }
   content: '';
   position: absolute;
   top: 0; left: 0; width: 100%; height: 100%;
-  background: linear-gradient(to right, #07070a 0%, transparent 20%);
+  background: linear-gradient(to bottom, #07070a 0%, transparent 20%);
 }
 
-/* 4. TABLA Y PAQUETES */
-.table-layout { width: 100%; }
+@media (min-width: 768px) {
+  .bleed-image-container::after {
+    background: linear-gradient(to right, #07070a 0%, transparent 20%);
+  }
+}
+
+/* 4. TABLA Y PAQUETES RESPONSIVOS */
+.table-layout { width: 100%; overflow-x: auto; }
 .table-layout table {
   width: 100%;
+  min-width: 600px;
   border-collapse: separate;
   border-spacing: 0;
   border: 1px solid rgba(255,255,255,0.1);
@@ -177,43 +209,60 @@ p, li { font-size: 21px; line-height: 1.5; font-weight: 300; }
 }
 
 .table-layout th, .table-layout td {
-  padding: 22px;
+  padding: clamp(10px, 2vw, 22px);
   text-align: left;
   border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 
-.table-layout th { background: rgba(255,255,255,0.08); color: #ffffff; font-size: 16px; text-transform: uppercase; }
+.table-layout th { background: rgba(255,255,255,0.08); color: #ffffff; font-size: 14px; text-transform: uppercase; }
 
 /* 5. DISEÑO DE PAQUETES PLUS */
 .plus-benefit {
   border-left: 3px solid #9d00ff;
   background: rgba(157, 0, 255, 0.05);
-  padding: 30px;
+  padding: 20px;
   border-radius: 0 12px 12px 0;
 }
 
 .benefit-tag {
   color: #9d00ff;
   font-weight: 800;
-  font-size: 14px;
+  font-size: 12px;
   text-transform: uppercase;
 }
 
 .nav-dots {
     position: fixed;
-    right: 20px;
+    right: 10px;
     top: 50%;
     transform: translateY(-50%);
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
     z-index: 100;
 }
+
+@media (max-width: 768px) { .nav-dots { display: none; } }
+
 .dot {
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
     background: rgba(255,255,255,0.2);
     border-radius: 50%;
+}
+
+.package-box {
+  background: rgba(0, 243, 255, 0.05); 
+  padding: clamp(20px, 4vw, 40px); 
+  border-radius: 20px; 
+  border: 1px solid rgba(0, 243, 255, 0.2);
+}
+
+.plus-box {
+  background: linear-gradient(135deg, rgba(157, 0, 255, 0.1), transparent); 
+  padding: clamp(20px, 4vw, 40px); 
+  border-radius: 20px; 
+  border: 1px solid #9d00ff;
 }
 
 </style>
@@ -228,16 +277,16 @@ p, li { font-size: 21px; line-height: 1.5; font-weight: 300; }
     <div class="dot"></div><div class="dot"></div><div class="dot"></div>
 </div>
 
-<!-- Slide 1: Portada -->
+<!-- Diapositiva 1: Portada -->
 <div class="slide-container">
     <div class="content-area" style="text-align: center;">
         <span class="subtitle">Propuesta Comercial Premium</span>
         <h1>Ruta Gastronómica<br>Amicabo</h1>
-        <p style="margin-top: 30px; font-size: 24px;">Una alianza estratégica de visibilidad, prestigio e impacto comunitario.</p>
+        <p style="margin-top: 20px;">Una alianza estratégica de visibilidad, prestigio e impacto comunitario.</p>
     </div>
 </div>
 
-<!-- Slide 2: El Movimiento (FOTO SUV) -->
+<!-- Diapositiva 2: El Movimiento (FOTO SUV) -->
 <div class="slide-container bleed-image-layout">
     <div class="bleed-content-container">
         <h2 class="slide-title">El Movimiento</h2>
@@ -247,88 +296,88 @@ p, li { font-size: 21px; line-height: 1.5; font-weight: 300; }
         </div>
     </div>
     <div class="bleed-image-container">
-        <img src="https://i.postimg.cc/vmNZbSvn/10_(1)(6).png" alt="">
+        <img src="https://i.postimg.cc/vmNZbSvn/10_(1)(6).png" alt="[Imagen de la Camioneta Oficial Amicabo]">
     </div>
 </div>
 
-<!-- Slide 3: ¿Qué es la Ruta? (NUEVA) -->
+<!-- Diapositiva 3: ¿Qué es la Ruta? -->
 <div class="slide-container">
     <div class="content-area">
         <h2 class="slide-title">¿Qué es la Ruta Amicabo?</h2>
         <div class="two-column">
             <div>
-                <p>Es la primera <strong>serie inmersiva</strong> diseñada para documentar la excelencia culinaria de Los Cabos. Un recorrido exclusivo donde cada negocio se convierte en el protagonista de un show de alta gama.</p>
-                <p>No somos una guía estática, somos una <strong>experiencia dinámica</strong> que conecta a los paladares más exigentes con las historias, los chefs y el ambiente que define a nuestra región.</p>
+                <p>Es la primera <strong>serie inmersiva</strong> diseñada para documentar la excelencia culinaria de Los Cabos. Un recorrido exclusivo donde cada negocio se convierte en el protagonista.</p>
+                <p>No somos una guía estática, somos una <strong>experiencia dinámica</strong> que conecta a los paladares más exigentes con las historias de nuestra región.</p>
             </div>
             <div class="image-wrapper">
-                <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=2070&auto=format&fit=crop" alt="">
+                <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=2070&auto=format&fit=crop" alt="[Imagen de Experiencia Gastronómica]">
             </div>
         </div>
     </div>
 </div>
 
-<!-- Slide 4: El Concepto Inmersivo (FOTO KBBQ) -->
+<!-- Diapositiva 4: El Concepto Inmersivo (FOTO KBBQ) -->
 <div class="slide-container">
     <div class="content-area">
         <h2 class="slide-title">El Concepto Visual</h2>
         <div class="two-column">
             <div>
                 <h3>Cine, no publicidad.</h3>
-                <p>Capturamos el alma de tu espacio con cinematografía. Elevamos el valor percibido para que el comensal sienta la exclusividad y el estatus del lugar antes de visitarte.</p>
+                <p>Capturamos el alma de tu espacio con cinematografía. Elevamos el valor percibido para que el comensal sienta la exclusividad del lugar antes de visitarte.</p>
             </div>
             <div class="image-wrapper">
-                <img src="https://i.postimg.cc/Z5jqDqB3/10_(1)(4).png" alt="">
+                <img src="https://i.postimg.cc/Z5jqDqB3/10_(1)(4).png" alt="[Imagen del concepto visual]">
             </div>
         </div>
     </div>
 </div>
 
-<!-- Slide 5: Narrativa (FOTO HOST) -->
+<!-- Diapositiva 5: Narrativa (FOTO HOST) -->
 <div class="slide-container bleed-image-layout">
     <div class="bleed-image-container">
-        <img src="https://i.postimg.cc/FKBHNnxs/10_(1)(5).png" alt="">
+        <img src="https://i.postimg.cc/FKBHNnxs/10_(1)(5).png" alt="[Imagen de la conductora en acción]">
     </div>
     <div class="bleed-content-container">
         <h2 class="slide-title">Historias que Conectan</h2>
         <div class="content-area">
-            <p>A través de conductores profesionales, humanizamos tu marca. Contamos la historia de tu cocina, logrando una conexión emocional y real con la audiencia de Los Cabos.</p>
+            <p>A través de conductores profesionales, humanizamos tu marca. Contamos la historia de tu cocina, logrando una conexión emocional real con la audiencia.</p>
         </div>
     </div>
 </div>
 
-<!-- Slide 6: Conexión (FOTO MARGARITA) -->
+<!-- Diapositiva 6: Conexión (FOTO MARGARITA) -->
 <div class="slide-container bleed-image-layout">
     <div class="bleed-content-container">
         <h2 class="slide-title">Conexión y Estilo de Vida</h2>
         <div class="content-area">
-            <p>Transmitimos la experiencia completa: el brindis, el ambiente y la satisfacción. Creamos un vínculo que invita al espectador a ser parte activa de tu comunidad.</p>
+            <p>Transmitimos la experiencia completa: el brindis, el ambiente y la satisfacción. Creamos un vínculo que invita al espectador a ser parte de tu comunidad.</p>
         </div>
     </div>
     <div class="bleed-image-container">
-        <img src="https://i.postimg.cc/1zj3sYKn/10_(1)(7).png" alt="">
+        <img src="https://i.postimg.cc/1zj3sYKn/10_(1)(7).png" alt="[Imagen de la bebida y ambiente]">
     </div>
 </div>
 
-<!-- Slide 7: Beneficios Importantes: Restaurant Week & Gala VIP -->
+<!-- Diapositiva 7: Beneficios Importantes -->
 <div class="slide-container">
     <div class="content-area">
-        <h2 class="slide-title">Acceso de Élite y Exclusividad</h2>
+        <h2 class="slide-title">Acceso de Élite</h2>
         <div class="tiled-content">
             <div class="tile">
                 <span class="icon"><i class="fa-solid fa-medal"></i></span>
                 <h3>Acceso Restaurant Week</h3>
-                <p>Tu participación en la Ruta te otorga el derecho y el acceso prioritario para ser protagonista en nuestra próxima <strong>Restaurant Week</strong>.</p>
+                <p>Derecho y acceso prioritario para ser protagonista en nuestra próxima <strong>Restaurant Week</strong>.</p>
             </div>
             <div class="tile" style="border-color: #9d00ff; background: rgba(157, 0, 255, 0.05);">
                 <span class="icon"><i class="fa-solid fa-crown" style="color: #9d00ff;"></i></span>
                 <h3>Gala VIP de Cierre</h3>
-                <p>Al finalizar la temporada, recibirás una invitación exclusiva al <strong>Evento VIP de Cierre</strong>, donde se reúnen los líderes del sector y marcas de lujo.</p>
+                <p>Invitación exclusiva al <strong>Evento VIP de Cierre</strong> con líderes del sector y marcas de lujo.</p>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Slide 8: Impacto Humano y Alianzas -->
+<!-- Diapositiva 8: Impacto Humano y Alianzas -->
 <div class="slide-container">
     <div class="content-area">
         <h2 class="slide-title">Alianzas con Propósito</h2>
@@ -337,113 +386,103 @@ p, li { font-size: 21px; line-height: 1.5; font-weight: 300; }
                 <div class="plus-benefit">
                     <span class="benefit-tag">Responsabilidad Social</span>
                     <h3 style="margin-top: 10px; color: #fff;">Patrocinio en Ayudas Comunitarias</h3>
-                    <p>Ser una marca con propósito eleva tu estatus ante la comunidad. Tu negocio será parte oficial de nuestras activaciones de ayuda humanitaria.</p>
-                    <p style="font-size: 18px; color: #9d00ff; font-weight: 700;">El consumidor actual elige marcas con empatía y compromiso social.</p>
+                    <p>Eleva tu estatus ante la comunidad siendo parte oficial de nuestras activaciones de ayuda humanitaria.</p>
+                    <p style="font-size: 16px; color: #9d00ff; font-weight: 700;">Marcas con empatía y compromiso social.</p>
                 </div>
             </div>
             <div class="image-wrapper">
-                <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=2070&auto=format&fit=crop" alt="">
+                <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=2070&auto=format&fit=crop" alt="[Imagen de ayuda comunitaria]">
             </div>
         </div>
     </div>
 </div>
 
-<!-- Slide 9: Detalle Paquete 1 -->
+<!-- Diapositiva 9: Detalle Paquete 1 -->
 <div class="slide-container">
     <div class="content-area">
         <h2 class="slide-title">Paquete: Ruta Amicabo</h2>
         <div class="two-column">
-            <div style="background: rgba(0, 243, 255, 0.05); padding: 40px; border-radius: 20px; border: 1px solid rgba(0, 243, 255, 0.2);">
-                <h3 style="color: #00f3ff; font-size: 36px; margin-bottom: 10px;">$6,500 MXN</h3>
-                <p>El punto de entrada a la autoridad gastronómica en Los Cabos.</p>
+            <div class="package-box">
+                <h3 style="color: #00f3ff; font-size: 28px; margin-bottom: 10px;">$6,500 MXN</h3>
+                <p>Entrada a la autoridad gastronómica en Los Cabos.</p>
                 <ul style="list-style: none; padding: 0; margin-top: 20px;">
-                    <li style="margin-bottom: 10px; font-size: 17px;"><i class="fa-solid fa-check" style="color:#00f3ff; margin-right:12px;"></i> Participación Oficial en la Serie.</li>
-                    <li style="margin-bottom: 10px; font-size: 17px;"><i class="fa-solid fa-check" style="color:#00f3ff; margin-right:12px;"></i> 1 Episodio Inmersivo de Alta Gama.</li>
-                    <li style="margin-bottom: 10px; font-size: 17px;"><i class="fa-solid fa-check" style="color:#00f3ff; margin-right:12px;"></i> 10,000 Vistas Mínimas Garantizadas.</li>
-                    <li style="margin-bottom: 10px; font-size: 17px;"><i class="fa-solid fa-check" style="color:#00f3ff; margin-right:12px;"></i> 1 Mes en el Ecosistema Amicabo.</li>
-                    <li style="margin-bottom: 10px; font-size: 17px; color: #fff; font-weight: 700;"><i class="fa-solid fa-video" style="color:#00f3ff; margin-right:12px;"></i> Selección de mejores clips grabados (Sesión B-Roll para reutilización).</li>
-                    <li style="margin-bottom: 10px; font-size: 17px;"><i class="fa-solid fa-check" style="color:#00f3ff; margin-right:12px;"></i> Acceso Prioritario a Restaurant Week.</li>
-                    <li style="margin-bottom: 10px; font-size: 17px;"><i class="fa-solid fa-check" style="color:#00f3ff; margin-right:12px;"></i> Invitación al Evento VIP Final.</li>
+                    <li style="margin-bottom: 10px; font-size: 15px;"><i class="fa-solid fa-check" style="color:#00f3ff; margin-right:10px;"></i> 1 Episodio Inmersivo de Alta Gama.</li>
+                    <li style="margin-bottom: 10px; font-size: 15px;"><i class="fa-solid fa-check" style="color:#00f3ff; margin-right:10px;"></i> 10,000 Vistas Mínimas Garantizadas.</li>
+                    <li style="margin-bottom: 10px; font-size: 15px; color: #fff; font-weight: 700;"><i class="fa-solid fa-video" style="color:#00f3ff; margin-right:10px;"></i> Sesión B-Roll (Clips para reutilización).</li>
+                    <li style="margin-bottom: 10px; font-size: 15px;"><i class="fa-solid fa-check" style="color:#00f3ff; margin-right:10px;"></i> Acceso Prioritario a Restaurant Week e Invitación VIP.</li>
                 </ul>
             </div>
             <div>
-                <p>Obtén una <strong>sesión de contenido profesional</strong> y visibilidad asegurada. Ideal para negocios que buscan calidad visual y estatus inmediato.</p>
+                <p>Obtén una <strong>sesión de contenido profesional</strong> y visibilidad asegurada en Los Cabos.</p>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Slide 10: Detalle Paquete Plus -->
+<!-- Diapositiva 10: Detalle Paquete Plus -->
 <div class="slide-container">
     <div class="content-area">
         <h2 class="slide-title">Paquete: Ruta Amicabo PLUS</h2>
         <div class="two-column">
-            <div style="background: linear-gradient(135deg, rgba(157, 0, 255, 0.1), transparent); padding: 40px; border-radius: 20px; border: 1px solid #9d00ff;">
-                <h3 style="color: #9d00ff; font-size: 36px; margin-bottom: 10px;">$10,000 MXN</h3>
-                <p>Dominio total del mercado y posicionamiento humanitario.</p>
+            <div class="plus-box">
+                <h3 style="color: #9d00ff; font-size: 28px; margin-bottom: 10px;">$10,000 MXN</h3>
+                <p>Dominio total y posicionamiento humanitario.</p>
                 <ul style="list-style: none; padding: 0; margin-top: 20px;">
-                    <li style="margin-bottom: 8px; font-size: 16px; color: #fff;"><i class="fa-solid fa-star" style="color:#9d00ff; margin-right:12px;"></i> <strong>Todo lo del paquete base incluido.</strong></li>
-                    <li style="margin-bottom: 8px; font-size: 16px;"><i class="fa-solid fa-plus" style="color:#9d00ff; margin-right:12px;"></i> +1 Reel Vertical Adicional (Alcance Viral).</li>
-                    <li style="margin-bottom: 8px; font-size: 16px;"><i class="fa-solid fa-plus" style="color:#9d00ff; margin-right:12px;"></i> +1 Nota Periodística en Carrusel.</li>
-                    <li style="margin-bottom: 8px; font-size: 16px;"><i class="fa-solid fa-plus" style="color:#9d00ff; margin-right:12px;"></i> Mayor fuerza en Dinámicas y Videos con IA.</li>
-                    <li style="margin-bottom: 8px; font-size: 16px; color: #9d00ff; font-weight: 700;"><i class="fa-solid fa-hand-holding-heart" style="margin-right:12px;"></i> Patrocinio Oficial en Ayudas Humanitarias.</li>
+                    <li style="margin-bottom: 8px; font-size: 15px; color: #fff;"><i class="fa-solid fa-star" style="color:#9d00ff; margin-right:10px;"></i> <strong>Todo lo del paquete base.</strong></li>
+                    <li style="margin-bottom: 8px; font-size: 15px;"><i class="fa-solid fa-plus" style="color:#9d00ff; margin-right:10px;"></i> +1 Reel Vertical Viral y Nota Periodística.</li>
+                    <li style="margin-bottom: 8px; font-size: 15px; color: #9d00ff; font-weight: 700;"><i class="fa-solid fa-hand-holding-heart" style="margin-right:10px;"></i> Patrocinio Oficial en Ayudas Humanitarias.</li>
                 </ul>
             </div>
             <div>
-                <p>La opción definitiva para marcas líderes. Vincula tu negocio con <strong>impacto social</strong> y multiplica tu presencia multicanal en Los Cabos.</p>
+                <p>La opción definitiva para marcas líderes que entienden el <strong>impacto social</strong>.</p>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Slide 11: Tabla Comparativa -->
+<!-- Diapositiva 11: Tabla Comparativa -->
 <div class="slide-container">
     <div class="content-area">
-        <h2 class="slide-title">Cuadro de Valor Total</h2>
+        <h2 class="slide-title">Cuadro de Valor</h2>
         <div class="table-layout">
             <table>
                 <thead>
                     <tr>
-                        <th>Beneficio Estratégico</th>
-                        <th>Ruta Base</th>
-                        <th>Ruta PLUS</th>
+                        <th>Beneficio</th>
+                        <th>Base</th>
+                        <th>PLUS</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Episodio de la Serie (Cinematográfico)</td>
+                        <td>Episodio de la Serie Inmersiva</td>
                         <td style="color: #00f3ff;"><i class="fa-solid fa-check"></i></td>
                         <td style="color: #9d00ff;"><i class="fa-solid fa-check"></i></td>
                     </tr>
                     <tr>
-                        <td>Garantía de 10,000 Vistas Reales</td>
+                        <td>Sesión de Clips (B-Roll para Reuso)</td>
                         <td style="color: #00f3ff;"><i class="fa-solid fa-check"></i></td>
                         <td style="color: #9d00ff;"><i class="fa-solid fa-check"></i></td>
                     </tr>
                     <tr>
-                        <td><strong>Sesión de Clips (B-Roll para Reuso)</strong></td>
+                        <td>Restaurant Week & Gala VIP</td>
                         <td style="color: #00f3ff;"><i class="fa-solid fa-check"></i></td>
                         <td style="color: #9d00ff;"><i class="fa-solid fa-check"></i></td>
                     </tr>
                     <tr>
-                        <td>Prioridad Restaurant Week & Gala VIP</td>
-                        <td style="color: #00f3ff;"><i class="fa-solid fa-check"></i></td>
-                        <td style="color: #9d00ff;"><i class="fa-solid fa-check"></i></td>
-                    </tr>
-                    <tr>
-                        <td>Reel Extra & Nota Editorial</td>
+                        <td>Reel Viral & Nota Editorial</td>
                         <td>—</td>
                         <td style="color: #9d00ff;"><i class="fa-solid fa-check"></i></td>
                     </tr>
                     <tr>
-                        <td><strong>Alianza en Activaciones Humanitarias</strong></td>
+                        <td>Patrocinio Humanitario</td>
                         <td>—</td>
                         <td style="color: #9d00ff;"><i class="fa-solid fa-check"></i></td>
                     </tr>
                     <tr style="background: rgba(0, 243, 255, 0.05);">
                         <td style="font-weight: 800; color: #fff;">INVERSIÓN</td>
-                        <td style="color: #00f3ff; font-weight: 800; font-size: 24px;">$6,500 MXN</td>
-                        <td style="color: #9d00ff; font-weight: 800; font-size: 24px;">$10,000 MXN</td>
+                        <td style="color: #00f3ff; font-weight: 800;">$6,500</td>
+                        <td style="color: #9d00ff; font-weight: 800;">$10,000</td>
                     </tr>
                 </tbody>
             </table>
@@ -451,29 +490,29 @@ p, li { font-size: 21px; line-height: 1.5; font-weight: 300; }
     </div>
 </div>
 
-<!-- Slide 12: El Legado -->
+<!-- Diapositiva 12: El Legado -->
 <div class="slide-container">
     <div class="content-area">
-        <h2 class="slide-title">Tu Legado como Marca</h2>
+        <h2 class="slide-title">Tu Legado</h2>
         <div class="two-column">
             <div>
-                <h3>Presencia con Propósito</h3>
-                <p>Estar en Amicabo es posicionarte como una marca activa en el desarrollo de la región. No solo recordarán tu comida, sino tu compromiso real con Los Cabos.</p>
+                <h3>Propósito</h3>
+                <p>Estar en Amicabo es posicionarte como una marca activa en el desarrollo de la región y comprometida con Los Cabos.</p>
             </div>
             <div class="image-wrapper">
-                <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=2069&auto=format&fit=crop" alt="">
+                <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=2069&auto=format&fit=crop" alt="[Imagen de gala VIP]">
             </div>
         </div>
     </div>
 </div>
 
-<!-- Slide 13: Cierre -->
+<!-- Diapositiva 13: Cierre -->
 <div class="slide-container">
     <div class="content-area" style="text-align: center;">
-        <h2 style="font-size: clamp(30px, 6vw, 60px); margin-bottom: 20px;">¿Listo para ser el protagonista?</h2>
-        <p style="color: #00f3ff; font-size: 28px; font-weight: 700;">El siguiente capítulo de tu éxito comienza aquí.</p>
-        <div style="margin-top: 50px; font-weight: 800; border: 2px solid #9d00ff; padding: 25px 50px; display: inline-block; border-radius: 50px; letter-spacing: 2px;">
-            HAGAMOS HISTORIA JUNTOS
+        <h2 style="font-size: clamp(28px, 6vw, 60px); margin-bottom: 20px;">¿Listo para ser el protagonista?</h2>
+        <p style="color: #00f3ff; font-weight: 700;">Hagamos historia juntos en Los Cabos.</p>
+        <div style="margin-top: 30px; font-weight: 800; border: 2px solid #9d00ff; padding: 20px 40px; display: inline-block; border-radius: 50px; letter-spacing: 1px;">
+            EMPEZAR AHORA
         </div>
     </div>
 </div>
