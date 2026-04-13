@@ -292,16 +292,16 @@ function CheckItem({ children }) {
   );
 }
 
-function GalleryImage({ src, alt, className = "", priority = false }) {
+function GalleryImage({ src, alt, className = "", priority = false, overlay = true, contain = false }) {
   return (
     <div className={`group relative overflow-hidden rounded-[1.75rem] border border-white/10 bg-white/[0.04] ${className}`}>
       <img
         src={src}
         alt={alt}
         loading={priority ? "eager" : "lazy"}
-        className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]"
+        className={`h-full w-full transition duration-500 group-hover:scale-[1.02] ${contain ? "object-contain" : "object-cover"}`}
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/10 to-transparent" />
+      {overlay ? <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/10 to-transparent" /> : null}
     </div>
   );
 }
@@ -381,7 +381,7 @@ export default function AmicaboRutaPresentation() {
         </div>
       </div>
 
-      <main ref={containerRef} className="snap-y snap-mandatory overflow-y-auto scroll-smooth">
+      <main ref={containerRef} className="snap-y snap-proximity overflow-y-auto scroll-smooth">
         <div ref={refs.portada}>
           <Section id="portada" className="pt-28">
             <div className="grid w-full gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
@@ -435,50 +435,17 @@ export default function AmicaboRutaPresentation() {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.7, ease: "easeOut", delay: 0.12 }}
               >
-                <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/10 via-white/[0.03] to-white/[0.02] p-4 shadow-2xl shadow-black/40 md:p-5">
-                  <div className="absolute right-0 top-0 h-48 w-48 rounded-full bg-amber-300/20 blur-3xl" />
-                  <div className="absolute bottom-0 left-0 h-44 w-44 rounded-full bg-pink-400/20 blur-3xl" />
-                  <div className="relative mb-4 flex items-center justify-between px-2 pt-1">
-                    <div>
-                      <div className="text-xs uppercase tracking-[0.3em] text-white/45">Visual Deck</div>
-                      <div className="mt-1 text-lg font-medium text-white">Ruta Amicabo Gallery</div>
-                    </div>
-                    <div className="rounded-full border border-white/10 bg-black/25 px-3 py-1 text-xs text-white/70">
-                      6 visuales integrados
-                    </div>
-                  </div>
-                  <div className="relative grid gap-3 md:grid-cols-2">
-                    <GalleryImage
-                      src={galleryImages[0]}
-                      alt="Visual principal Ruta Amicabo"
-                      priority
-                      className="aspect-[4/3] md:col-span-2"
-                    />
-                    <GalleryImage
-                      src={galleryImages[1]}
-                      alt="Visual Ruta Amicabo 2"
-                      className="aspect-[4/5]"
-                    />
-                    <GalleryImage
-                      src={galleryImages[2]}
-                      alt="Visual Ruta Amicabo 3"
-                      className="aspect-[4/5]"
-                    />
-                    <GalleryImage
-                      src={galleryImages[3]}
-                      alt="Visual Ruta Amicabo 4"
-                      className="aspect-[16/10]"
-                    />
-                    <GalleryImage
-                      src={galleryImages[4]}
-                      alt="Visual Ruta Amicabo 5"
-                      className="aspect-[16/10]"
-                    />
-                  </div>
+                <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/10 via-white/[0.03] to-white/[0.02] p-3 shadow-2xl shadow-black/40 md:p-4">
+                  <GalleryImage
+                    src={galleryImages[0]}
+                    alt="Visual principal Ruta Amicabo"
+                    priority
+                    className="aspect-[10/13] md:aspect-[4/5]"
+                  />
                   <div className="relative mt-3 rounded-[1.5rem] border border-white/10 bg-black/25 p-4">
-                    <div className="text-xs uppercase tracking-[0.25em] text-white/45">Sensación visual</div>
+                    <div className="text-xs uppercase tracking-[0.25em] text-white/45">Visual principal</div>
                     <p className="mt-2 text-sm leading-6 text-white/75">
-                      La presentación ahora combina la propuesta comercial con los visuales reales de la ruta para reforzar percepción premium, presencia y deseo de participación.
+                      Una presencia visual fuerte para abrir la propuesta con una sensación premium, gastronómica y aspiracional.
                     </p>
                   </div>
                 </div>
@@ -489,33 +456,47 @@ export default function AmicaboRutaPresentation() {
 
         <div ref={refs.movimiento}>
           <Section id="movimiento" className="pt-28">
-            <div className="grid w-full gap-10 lg:grid-cols-[1fr_1fr] lg:items-center">
-              <TitleBlock
-                eyebrow={slides[1].eyebrow}
-                title={slides[1].title}
-                subtitle={slides[1].subtitle}
-              />
+            <div className="grid w-full gap-8 lg:grid-cols-[1fr_0.9fr] lg:items-center">
+              <div>
+                <TitleBlock
+                  eyebrow={slides[1].eyebrow}
+                  title={slides[1].title}
+                  subtitle={slides[1].subtitle}
+                />
+                <motion.div
+                  variants={fadeUp}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{ duration: 0.55 }}
+                  className="mt-6 grid gap-4"
+                >
+                  {[
+                    "Presencia física y digital constante en la región",
+                    "Percepción de autoridad dentro del ecosistema Amicabo",
+                    "Visibilidad que se siente como acceso, no como publicidad",
+                  ].map((item) => (
+                    <CheckItem key={item}>{item}</CheckItem>
+                  ))}
+                  <div className="rounded-[2rem] border border-white/10 bg-gradient-to-br from-amber-200/10 via-white/[0.04] to-pink-300/10 p-6">
+                    <div className="text-xs uppercase tracking-[0.25em] text-white/45">Llave maestra</div>
+                    <p className="mt-3 text-2xl font-medium leading-9 text-white">
+                      Entrar a la Ruta es ganar acceso a una conversación con prestigio acumulado.
+                    </p>
+                  </div>
+                </motion.div>
+              </div>
               <motion.div
                 variants={fadeUp}
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.3 }}
-                transition={{ duration: 0.55 }}
-                className="grid gap-4"
               >
-                {[
-                  "Presencia física y digital constante en la región",
-                  "Percepción de autoridad dentro del ecosistema Amicabo",
-                  "Visibilidad que se siente como acceso, no como publicidad",
-                ].map((item) => (
-                  <CheckItem key={item}>{item}</CheckItem>
-                ))}
-                <div className="rounded-[2rem] border border-white/10 bg-gradient-to-br from-amber-200/10 via-white/[0.04] to-pink-300/10 p-6">
-                  <div className="text-xs uppercase tracking-[0.25em] text-white/45">Llave maestra</div>
-                  <p className="mt-3 text-2xl font-medium leading-9 text-white">
-                    Entrar a la Ruta es ganar acceso a una conversación con prestigio acumulado.
-                  </p>
-                </div>
+                <GalleryImage
+                  src={galleryImages[1]}
+                  alt="Visual estratégico del movimiento Ruta Amicabo"
+                  className="aspect-[10/12] md:aspect-[5/6]"
+                />
               </motion.div>
             </div>
           </Section>
@@ -540,50 +521,46 @@ export default function AmicaboRutaPresentation() {
                   <FeatureCard key={item.title} {...item} />
                 ))}
               </motion.div>
-
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ staggerChildren: 0.08, delayChildren: 0.1 }}
-                className="mt-8 grid gap-4 md:grid-cols-3"
-              >
-                {galleryImages.slice(3, 6).map((src, index) => (
-                  <motion.div key={src} variants={fadeUp}>
-                    <GalleryImage
-                      src={src}
-                      alt={`Visual complementario ${index + 4}`}
-                      className="aspect-[16/11]"
-                    />
-                  </motion.div>
-                ))}
-              </motion.div>
             </div>
           </Section>
         </div>
 
         <div ref={refs.cine}>
           <Section id="cine" className="pt-28">
-            <div className="grid w-full gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
-              <TitleBlock
-                eyebrow={slides[3].eyebrow}
-                title={slides[3].title}
-                subtitle={slides[3].subtitle}
-              />
+            <div className="grid w-full gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
+              <div>
+                <TitleBlock
+                  eyebrow={slides[3].eyebrow}
+                  title={slides[3].title}
+                  subtitle={slides[3].subtitle}
+                />
+                <motion.div
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{ staggerChildren: 0.08 }}
+                  className="mt-8 grid gap-3"
+                >
+                  {cinemaPoints.map((point) => (
+                    <motion.div key={point} variants={fadeUp}>
+                      <div className="rounded-3xl border border-white/10 bg-white/[0.04] px-5 py-4 text-base text-white/85">
+                        {point}
+                      </div>
+                    </motion.div>
+                  ))}
+                </motion.div>
+              </div>
               <motion.div
+                variants={fadeUp}
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.3 }}
-                transition={{ staggerChildren: 0.08 }}
-                className="grid gap-3"
               >
-                {cinemaPoints.map((point) => (
-                  <motion.div key={point} variants={fadeUp}>
-                    <div className="rounded-3xl border border-white/10 bg-white/[0.04] px-5 py-4 text-base text-white/85">
-                      {point}
-                    </div>
-                  </motion.div>
-                ))}
+                <GalleryImage
+                  src={galleryImages[2]}
+                  alt="Visual cinematográfico de la Ruta"
+                  className="aspect-[10/12] md:aspect-[5/6]"
+                />
               </motion.div>
             </div>
           </Section>
@@ -618,22 +595,36 @@ export default function AmicaboRutaPresentation() {
 
         <div ref={refs.experiencia}>
           <Section id="experiencia" className="pt-28">
-            <div className="w-full">
-              <TitleBlock
-                eyebrow={slides[5].eyebrow}
-                title={slides[5].title}
-                subtitle={slides[5].subtitle}
-              />
+            <div className="grid w-full gap-8 lg:grid-cols-[1fr_0.9fr] lg:items-center">
+              <div>
+                <TitleBlock
+                  eyebrow={slides[5].eyebrow}
+                  title={slides[5].title}
+                  subtitle={slides[5].subtitle}
+                />
+                <motion.div
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ staggerChildren: 0.1 }}
+                  className="mt-10 grid gap-5 md:grid-cols-3"
+                >
+                  {experienceItems.map((item) => (
+                    <FeatureCard key={item.title} {...item} />
+                  ))}
+                </motion.div>
+              </div>
               <motion.div
+                variants={fadeUp}
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ staggerChildren: 0.1 }}
-                className="mt-10 grid gap-5 md:grid-cols-3"
+                viewport={{ once: true, amount: 0.3 }}
               >
-                {experienceItems.map((item) => (
-                  <FeatureCard key={item.title} {...item} />
-                ))}
+                <GalleryImage
+                  src={galleryImages[3]}
+                  alt="Visual de experiencia total de la ruta"
+                  className="aspect-[10/12] md:aspect-[5/6]"
+                />
               </motion.div>
             </div>
           </Section>
@@ -670,28 +661,42 @@ export default function AmicaboRutaPresentation() {
 
         <div ref={refs.impacto}>
           <Section id="impacto" className="pt-28">
-            <div className="grid w-full gap-10 lg:grid-cols-[1fr_1fr] lg:items-center">
-              <TitleBlock
-                eyebrow={slides[7].eyebrow}
-                title={slides[7].title}
-                subtitle={slides[7].subtitle}
-              />
+            <div className="grid w-full gap-8 lg:grid-cols-[1fr_0.95fr] lg:items-center">
+              <div>
+                <TitleBlock
+                  eyebrow={slides[7].eyebrow}
+                  title={slides[7].title}
+                  subtitle={slides[7].subtitle}
+                />
+                <motion.div
+                  variants={fadeUp}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.3 }}
+                  className="mt-6 rounded-[2rem] border border-white/10 bg-gradient-to-br from-emerald-300/10 via-white/[0.04] to-white/[0.03] p-8"
+                >
+                  <div className="mb-5 inline-flex rounded-2xl border border-white/10 bg-white/5 p-3">
+                    <HeartHandshake className="h-5 w-5" />
+                  </div>
+                  <p className="text-3xl font-medium leading-tight text-white md:text-4xl">
+                    El consumidor actual también elige marcas con empatía real.
+                  </p>
+                  <p className="mt-4 text-base leading-7 text-white/70">
+                    Al integrarse a las activaciones comunitarias de Amicabo, el restaurante no solo gana exposición: gana posicionamiento humano y legitimidad social.
+                  </p>
+                </motion.div>
+              </div>
               <motion.div
                 variants={fadeUp}
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.3 }}
-                className="rounded-[2rem] border border-white/10 bg-gradient-to-br from-emerald-300/10 via-white/[0.04] to-white/[0.03] p-8"
               >
-                <div className="mb-5 inline-flex rounded-2xl border border-white/10 bg-white/5 p-3">
-                  <HeartHandshake className="h-5 w-5" />
-                </div>
-                <p className="text-3xl font-medium leading-tight text-white md:text-4xl">
-                  El consumidor actual también elige marcas con empatía real.
-                </p>
-                <p className="mt-4 text-base leading-7 text-white/70">
-                  Al integrarse a las activaciones comunitarias de Amicabo, el restaurante no solo gana exposición: gana posicionamiento humano y legitimidad social.
-                </p>
+                <GalleryImage
+                  src={galleryImages[4]}
+                  alt="Visual de impacto social y posicionamiento"
+                  className="aspect-[10/12] md:aspect-[5/6]"
+                />
               </motion.div>
             </div>
           </Section>
@@ -826,43 +831,56 @@ export default function AmicaboRutaPresentation() {
 
         <div ref={refs.cierre}>
           <Section id="cierre" className="pt-28">
-            <div className="w-full text-center">
-              <TitleBlock
-                eyebrow={slides[11].eyebrow}
-                title={slides[11].title}
-                subtitle={slides[11].subtitle}
-                align="center"
-              />
+            <div className="grid w-full gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
               <motion.div
                 variants={fadeUp}
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.3 }}
-                className="mx-auto mt-10 max-w-4xl rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/[0.06] via-white/[0.04] to-amber-200/10 p-8 md:p-10"
               >
-                <div className="mx-auto inline-flex rounded-2xl border border-white/10 bg-white/5 p-3">
-                  <ShieldCheck className="h-6 w-6" />
-                </div>
-                <p className="mt-6 text-3xl font-semibold leading-tight text-white md:text-5xl">
-                  El siguiente capítulo de tu éxito comienza aquí.
-                </p>
-                <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-white/70 md:text-lg">
-                  Ruta Amicabo no vende solo contenido: vende percepción, acceso, narrativa y posicionamiento dentro de la conversación premium de Los Cabos.
-                </p>
-                <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-                  <Button className="rounded-full bg-white px-6 text-black hover:bg-white/90">
-                    Hagamos historia
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
-                  <Button
-                    variant="outline"
-                    onClick={() => jumpTo("portada")}
-                    className="rounded-full border-white/15 bg-white/5 text-white hover:bg-white/10"
-                  >
-                    Volver al inicio
-                  </Button>
-                </div>
+                <GalleryImage
+                  src={galleryImages[5]}
+                  alt="Visual final Ruta Amicabo"
+                  className="aspect-[10/12] md:aspect-[5/6]"
+                />
               </motion.div>
+              <div className="w-full text-left lg:text-left">
+                <TitleBlock
+                  eyebrow={slides[11].eyebrow}
+                  title={slides[11].title}
+                  subtitle={slides[11].subtitle}
+                />
+                <motion.div
+                  variants={fadeUp}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.3 }}
+                  className="mt-8 max-w-4xl rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/[0.06] via-white/[0.04] to-amber-200/10 p-8 md:p-10"
+                >
+                  <div className="inline-flex rounded-2xl border border-white/10 bg-white/5 p-3">
+                    <ShieldCheck className="h-6 w-6" />
+                  </div>
+                  <p className="mt-6 text-3xl font-semibold leading-tight text-white md:text-5xl">
+                    El siguiente capítulo de tu éxito comienza aquí.
+                  </p>
+                  <p className="mt-5 max-w-2xl text-base leading-7 text-white/70 md:text-lg">
+                    Ruta Amicabo no vende solo contenido: vende percepción, acceso, narrativa y posicionamiento dentro de la conversación premium de Los Cabos.
+                  </p>
+                  <div className="mt-8 flex flex-wrap items-center gap-3">
+                    <Button className="rounded-full bg-white px-6 text-black hover:bg-white/90">
+                      Hagamos historia
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={() => jumpTo("portada")}
+                      className="rounded-full border-white/15 bg-white/5 text-white hover:bg-white/10"
+                    >
+                      Volver al inicio
+                    </Button>
+                  </div>
+                </motion.div>
+              </div>
             </div>
           </Section>
         </div>
