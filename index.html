@@ -13,7 +13,6 @@
 * { box-sizing: border-box; }
 
 html {
-  scroll-snap-type: y mandatory;
   scroll-behavior: smooth;
 }
 
@@ -40,13 +39,11 @@ body {
 .slide-container {
   min-height: 100vh;
   width: 100vw;
-  scroll-snap-align: start;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   position: relative;
-  overflow-y: auto;
   padding: 80px 20px;
   background-color: #07070a;
   border-bottom: 1px solid rgba(255, 255, 255, 0.03);
@@ -395,6 +392,7 @@ p, li { font-size: clamp(16px, 2vw, 20px); line-height: 1.6; font-weight: 300; c
   border: 2px solid rgba(255,255,255,0.2);
   border-radius: 50%;
   transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 .nav-dot.active { background: #00f3ff; border-color: #00f3ff; transform: scale(1.4); box-shadow: 0 0 12px rgba(0, 243, 255, 0.4); }
@@ -409,12 +407,20 @@ p, li { font-size: clamp(16px, 2vw, 20px); line-height: 1.6; font-weight: 300; c
 <body>
 
 <div class="nav-indicator">
-    <div class="nav-dot active"></div>
-    <div class="nav-dot"></div><div class="nav-dot"></div><div class="nav-dot"></div>
-    <div class="nav-dot"></div><div class="nav-dot"></div><div class="nav-dot"></div>
-    <div class="nav-dot"></div><div class="nav-dot"></div><div class="nav-dot"></div>
-    <div class="nav-dot"></div><div class="nav-dot"></div><div class="nav-dot"></div>
-    <div class="nav-dot"></div>
+    <div class="nav-dot active" onclick="scrollToSlide(0)"></div>
+    <div class="nav-dot" onclick="scrollToSlide(1)"></div>
+    <div class="nav-dot" onclick="scrollToSlide(2)"></div>
+    <div class="nav-dot" onclick="scrollToSlide(3)"></div>
+    <div class="nav-dot" onclick="scrollToSlide(4)"></div>
+    <div class="nav-dot" onclick="scrollToSlide(5)"></div>
+    <div class="nav-dot" onclick="scrollToSlide(6)"></div>
+    <div class="nav-dot" onclick="scrollToSlide(7)"></div>
+    <div class="nav-dot" onclick="scrollToSlide(8)"></div>
+    <div class="nav-dot" onclick="scrollToSlide(9)"></div>
+    <div class="nav-dot" onclick="scrollToSlide(10)"></div>
+    <div class="nav-dot" onclick="scrollToSlide(11)"></div>
+    <div class="nav-dot" onclick="scrollToSlide(12)"></div>
+    <div class="nav-dot" onclick="scrollToSlide(13)"></div>
 </div>
 
 <!-- Slide 1: Portada Dinámica -->
@@ -441,7 +447,7 @@ p, li { font-size: clamp(16px, 2vw, 20px); line-height: 1.6; font-weight: 300; c
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://i.postimg.cc/vmNZbSvn/10_(1)(6).png" alt="">
+                <img src="https://i.postimg.cc/vmNZbSvn/10_(1)(6).png" alt="SUV Oficial Amicabo">
             </div>
         </div>
     </div>
@@ -477,7 +483,7 @@ p, li { font-size: clamp(16px, 2vw, 20px); line-height: 1.6; font-weight: 300; c
     <div class="content-area">
         <div class="two-column">
             <div class="image-card">
-                <img src="https://i.postimg.cc/Z5jqDqB3/10_(1)(4).png" alt="">
+                <img src="https://i.postimg.cc/Z5jqDqB3/10_(1)(4).png" alt="Concepto Inmersivo">
             </div>
             <div>
                 <span class="subtitle">Visual Storytelling</span>
@@ -498,7 +504,7 @@ p, li { font-size: clamp(16px, 2vw, 20px); line-height: 1.6; font-weight: 300; c
                 <p>Nuestros conductores profesionales guían a la audiencia. Contamos la **pasión y el alma** de tu cocina para generar confianza inmediata.</p>
             </div>
             <div class="image-card">
-                <img src="https://i.postimg.cc/FKBHNnxs/10_(1)(5).png" alt="">
+                <img src="https://i.postimg.cc/FKBHNnxs/10_(1)(5).png" alt="Host en acción">
             </div>
         </div>
     </div>
@@ -509,7 +515,7 @@ p, li { font-size: clamp(16px, 2vw, 20px); line-height: 1.6; font-weight: 300; c
     <div class="content-area">
         <div class="two-column">
             <div class="image-card">
-                <img src="https://i.postimg.cc/1zj3sYKn/10_(1)(7).png" alt="[Image of Estilo de vida]">
+                <img src="https://i.postimg.cc/1zj3sYKn/10_(1)(7).png" alt="Estilo de vida">
             </div>
             <div>
                 <span class="subtitle">Estilo de Vida</span>
@@ -552,7 +558,7 @@ p, li { font-size: clamp(16px, 2vw, 20px); line-height: 1.6; font-weight: 300; c
                 </div>
             </div>
             <div class="image-card">
-                <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=2070&auto=format&fit=crop" alt="">
+                <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=2070&auto=format&fit=crop" alt="Ayuda humanitaria">
             </div>
         </div>
     </div>
@@ -574,7 +580,7 @@ p, li { font-size: clamp(16px, 2vw, 20px); line-height: 1.6; font-weight: 300; c
                 </ul>
             </div>
             <div class="image-card">
-                <img src="https://i.postimg.cc/k4RX4FjS/10_(1)(9).png" alt="">
+                <img src="https://i.postimg.cc/k4RX4FjS/10_(1)(9).png" alt="Fotografía Gastronómica">
             </div>
         </div>
     </div>
@@ -588,7 +594,7 @@ p, li { font-size: clamp(16px, 2vw, 20px); line-height: 1.6; font-weight: 300; c
         
         <div class="two-column" style="margin-top: 10px;">
             <div class="image-card" style="height: 100%;">
-                <img src="https://i.postimg.cc/5tR2bkmQ/10_(1)(8).png" alt="[Image of Hamburguesa Premium]">
+                <img src="https://i.postimg.cc/5tR2bkmQ/10_(1)(8).png" alt="Hamburguesa Premium">
             </div>
             
             <div class="glass-box" style="border-color: rgba(157, 0, 255, 0.4); background: rgba(157, 0, 255, 0.02);">
@@ -736,7 +742,7 @@ p, li { font-size: clamp(16px, 2vw, 20px); line-height: 1.6; font-weight: 300; c
                 <p>Estar en Amicabo es posicionarte como una marca activa en el desarrollo de la región. El compromiso real con Los Cabos.</p>
             </div>
             <div class="image-card" style="transform: rotate(-1deg);">
-                <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=2069&auto=format&fit=crop" alt="">
+                <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=2069&auto=format&fit=crop" alt="Gala VIP de Cierre">
             </div>
         </div>
     </div>
@@ -779,12 +785,16 @@ p, li { font-size: clamp(16px, 2vw, 20px); line-height: 1.6; font-weight: 300; c
     const slides = document.querySelectorAll('.slide-container');
     const dots = document.querySelectorAll('.nav-dot');
 
+    function scrollToSlide(index) {
+        slides[index].scrollIntoView({ behavior: 'smooth' });
+    }
+
     window.addEventListener('scroll', () => {
         let current = 0;
         slides.forEach((slide, index) => {
             const slideTop = slide.offsetTop;
             const slideHeight = slide.clientHeight;
-            if (pageYOffset >= (slideTop - slideHeight / 3)) {
+            if (window.pageYOffset >= (slideTop - slideHeight / 3)) {
                 current = index;
             }
         });
