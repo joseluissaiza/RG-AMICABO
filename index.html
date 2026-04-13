@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ruta Gastronómica Amicabo - Pitch Deck 2024</title>
+    <title>Ruta Gastronómica Amicabo - Pitch Deck 2026</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
@@ -266,7 +266,7 @@ p, li { font-size: clamp(16px, 2vw, 20px); line-height: 1.6; font-weight: 300; c
   .two-column { grid-template-columns: 1fr 1fr; gap: 80px; }
 }
 
-/* 6. PAQUETES & TABLA */
+/* 6. PAQUETES & TABLA RESPONSIVA MEJORADA */
 .package-badge {
   display: inline-block;
   padding: 6px 16px;
@@ -282,10 +282,89 @@ p, li { font-size: clamp(16px, 2vw, 20px); line-height: 1.6; font-weight: 300; c
 
 .plus-badge { background: #9d00ff; color: #fff; }
 
-.table-layout { overflow-x: auto; border-radius: 24px; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.05); }
-table { width: 100%; border-collapse: collapse; min-width: 750px; }
-th, td { padding: 25px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.05); }
-th { font-weight: 800; text-transform: uppercase; letter-spacing: 2px; color: #00f3ff; font-size: 13px; }
+.comparison-wrapper {
+    width: 100%;
+    margin-top: 30px;
+}
+
+/* Estilos de Tabla para Desktop */
+.table-desktop {
+    display: none;
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 24px;
+    overflow: hidden;
+    background: rgba(0,0,0,0.4);
+    border: 1px solid rgba(255,255,255,0.05);
+}
+
+@media (min-width: 768px) {
+    .table-desktop { display: table; }
+}
+
+.table-desktop th, .table-desktop td {
+    padding: 22px 25px;
+    text-align: left;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.table-desktop th {
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #00f3ff;
+    font-size: 13px;
+    background: rgba(255,255,255,0.02);
+}
+
+/* Estilos de Comparación para Móvil */
+.mobile-comparison-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+@media (min-width: 768px) {
+    .mobile-comparison-list { display: none; }
+}
+
+.mobile-compare-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 20px;
+}
+
+.mobile-compare-card h4 {
+    font-size: 14px;
+    color: #fff;
+    margin-bottom: 12px;
+    letter-spacing: 1px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 8px;
+}
+
+.mobile-compare-values {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.compare-val {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    flex: 1;
+}
+
+.compare-val span {
+    font-size: 10px;
+    text-transform: uppercase;
+    color: #777;
+    font-weight: 800;
+}
+
 .td-highlight { background: rgba(157, 0, 255, 0.05); }
 
 /* NAVEGACIÓN DOTS */
@@ -333,7 +412,7 @@ th { font-weight: 800; text-transform: uppercase; letter-spacing: 2px; color: #0
 <div class="slide-container">
     <div class="watermark" style="top: 10%; left: -5%;">AMICABO</div>
     <div class="content-area" style="text-align: center;">
-        <span class="subtitle">Showcase Gastronómico 2024</span>
+        <span class="subtitle">Showcase Gastronómico 2026</span>
         <h1>Ruta Gastronómica<br><span style="color: #00f3ff;">Amicabo</span></h1>
         <div style="width: 80px; height: 4px; background: #00f3ff; margin: 40px auto;"></div>
         <p style="max-width: 800px; margin-inline: auto;">La evolución del marketing culinario en Los Cabos: Presencia, Prestigio e Impacto.</p>
@@ -540,52 +619,100 @@ th { font-weight: 800; text-transform: uppercase; letter-spacing: 2px; color: #0
     </div>
 </div>
 
-<!-- Slide 11: Tabla Comparativa -->
+<!-- Slide 11: Cuadro de Valor Responsivo -->
 <div class="slide-container">
     <div class="content-area">
         <h2 class="slide-title" style="text-align: center; border: none; padding: 0;">Cuadro de Valor</h2>
-        <div class="table-layout" style="margin-top: 30px;">
-            <table>
+        
+        <div class="comparison-wrapper">
+            <!-- Tabla para Desktop -->
+            <table class="table-desktop">
                 <thead>
                     <tr>
                         <th>Beneficios Estratégicos</th>
-                        <th>Ruta Base ($6.5k)</th>
-                        <th>Ruta PLUS ($10k)</th>
+                        <th style="text-align: center;">Ruta Base ($6.5k)</th>
+                        <th style="text-align: center;">Ruta PLUS ($10k)</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td>Episodio de Serie Inmersiva</td>
-                        <td><i class="fa-solid fa-check" style="color: #00f3ff;"></i></td>
-                        <td class="td-highlight"><i class="fa-solid fa-check" style="color: #9d00ff;"></i></td>
+                        <td style="text-align: center;"><i class="fa-solid fa-check" style="color: #00f3ff;"></i></td>
+                        <td style="text-align: center;" class="td-highlight"><i class="fa-solid fa-check" style="color: #9d00ff;"></i></td>
                     </tr>
                     <tr>
                         <td>Sesión de Clips Profesionales (B-Roll)</td>
-                        <td><i class="fa-solid fa-check" style="color: #00f3ff;"></i></td>
-                        <td class="td-highlight"><i class="fa-solid fa-check" style="color: #9d00ff;"></i></td>
+                        <td style="text-align: center;"><i class="fa-solid fa-check" style="color: #00f3ff;"></i></td>
+                        <td style="text-align: center;" class="td-highlight"><i class="fa-solid fa-check" style="color: #9d00ff;"></i></td>
                     </tr>
                     <tr>
                         <td><strong>1 Mes de Presencia en Ecosistema</strong></td>
-                        <td><i class="fa-solid fa-check" style="color: #00f3ff;"></i></td>
-                        <td class="td-highlight" style="font-weight: 900; color: #9d00ff;">INCLUIDO / REFORZADO</td>
+                        <td style="text-align: center;"><i class="fa-solid fa-check" style="color: #00f3ff;"></i></td>
+                        <td style="text-align: center;" class="td-highlight" style="font-weight: 900; color: #9d00ff;">INCLUIDO / REFORZADO</td>
                     </tr>
                     <tr>
                         <td>Acceso Restaurant Week & Gala VIP</td>
-                        <td><i class="fa-solid fa-check" style="color: #00f3ff;"></i></td>
-                        <td class="td-highlight"><i class="fa-solid fa-check" style="color: #9d00ff;"></i></td>
+                        <td style="text-align: center;"><i class="fa-solid fa-check" style="color: #00f3ff;"></i></td>
+                        <td style="text-align: center;" class="td-highlight"><i class="fa-solid fa-check" style="color: #9d00ff;"></i></td>
                     </tr>
                     <tr>
                         <td><strong>Reel Viral + Nota Carrusel</strong></td>
-                        <td><i class="fa-solid fa-minus" style="opacity: 0.2;"></i></td>
-                        <td class="td-highlight"><i class="fa-solid fa-check" style="color: #9d00ff;"></i></td>
+                        <td style="text-align: center;"><i class="fa-solid fa-minus" style="opacity: 0.2;"></i></td>
+                        <td style="text-align: center;" class="td-highlight"><i class="fa-solid fa-check" style="color: #9d00ff;"></i></td>
                     </tr>
                     <tr>
                         <td><strong>Patrocinio Humanitario Oficial</strong></td>
-                        <td>—</td>
-                        <td class="td-highlight"><i class="fa-solid fa-check" style="color: #9d00ff;"></i></td>
+                        <td style="text-align: center;">—</td>
+                        <td style="text-align: center;" class="td-highlight"><i class="fa-solid fa-check" style="color: #9d00ff;"></i></td>
                     </tr>
                 </tbody>
             </table>
+
+            <!-- Lista de Comparación para Móvil -->
+            <div class="mobile-comparison-list">
+                <div class="mobile-compare-card">
+                    <h4>Episodio Serie Inmersiva</h4>
+                    <div class="mobile-compare-values">
+                        <div class="compare-val"><span>Base</span><i class="fa-solid fa-check" style="color: #00f3ff;"></i></div>
+                        <div class="compare-val"><span>PLUS</span><i class="fa-solid fa-check" style="color: #9d00ff;"></i></div>
+                    </div>
+                </div>
+                <div class="mobile-compare-card">
+                    <h4>Sesión B-Roll (Clips Pro)</h4>
+                    <div class="mobile-compare-values">
+                        <div class="compare-val"><span>Base</span><i class="fa-solid fa-check" style="color: #00f3ff;"></i></div>
+                        <div class="compare-val"><span>PLUS</span><i class="fa-solid fa-check" style="color: #9d00ff;"></i></div>
+                    </div>
+                </div>
+                <div class="mobile-compare-card">
+                    <h4>1 Mes de Presencia Ecosistema</h4>
+                    <div class="mobile-compare-values">
+                        <div class="compare-val"><span>Base</span><i class="fa-solid fa-check" style="color: #00f3ff;"></i></div>
+                        <div class="compare-val"><span>PLUS</span><i class="fa-solid fa-circle-check" style="color: #9d00ff;"></i></div>
+                    </div>
+                </div>
+                <div class="mobile-compare-card">
+                    <h4>Restaurant Week & Gala VIP</h4>
+                    <div class="mobile-compare-values">
+                        <div class="compare-val"><span>Base</span><i class="fa-solid fa-check" style="color: #00f3ff;"></i></div>
+                        <div class="compare-val"><span>PLUS</span><i class="fa-solid fa-check" style="color: #9d00ff;"></i></div>
+                    </div>
+                </div>
+                <div class="mobile-compare-card">
+                    <h4>Reel Viral + Nota Carrusel</h4>
+                    <div class="mobile-compare-values">
+                        <div class="compare-val"><span>Base</span><i class="fa-solid fa-minus" style="opacity: 0.2;"></i></div>
+                        <div class="compare-val"><span>PLUS</span><i class="fa-solid fa-check" style="color: #9d00ff;"></i></div>
+                    </div>
+                </div>
+                <div class="mobile-compare-card">
+                    <h4>Patrocinio Humanitario</h4>
+                    <div class="mobile-compare-values">
+                        <div class="compare-val"><span>Base</span><i class="fa-solid fa-minus" style="opacity: 0.2;"></i></div>
+                        <div class="compare-val"><span>PLUS</span><i class="fa-solid fa-check" style="color: #9d00ff;"></i></div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
