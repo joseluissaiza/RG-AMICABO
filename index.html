@@ -1,1 +1,502 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ruta Gastronómica Amicabo</title>
+  <meta name="description" content="Presentación premium de la Ruta Gastronómica Amicabo" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: #05070b;
+      color: white;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    .bg-main {
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,0.11), transparent 28%),
+        radial-gradient(circle at bottom right, rgba(244,114,182,0.12), transparent 24%),
+        linear-gradient(180deg, #06070b 0%, #090b12 45%, #0d1018 100%);
+    }
+    .grid-overlay::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: 0.07;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.2) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.2) 1px, transparent 1px);
+      background-size: 42px 42px;
+      pointer-events: none;
+    }
+    .glass {
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    .fade-up {
+      opacity: 0;
+      transform: translateY(24px);
+      animation: fadeUp 0.7s ease forwards;
+    }
+    .delay-1 { animation-delay: .08s; }
+    .delay-2 { animation-delay: .16s; }
+    .delay-3 { animation-delay: .24s; }
+    @keyframes fadeUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .img-card img {
+      transition: transform .45s ease;
+    }
+    .img-card:hover img {
+      transform: scale(1.025);
+    }
+    .section-min {
+      min-height: 100svh;
+    }
+    @media (max-width: 768px) {
+      .section-min {
+        min-height: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
 
+  <script type="text/babel">
+    const galleryImages = [
+      "https://i.postimg.cc/Z5jqDqB3/10_(1)(4).png",
+      "https://i.postimg.cc/FKBHNnxs/10_(1)(5).png",
+      "https://i.postimg.cc/vmNZbSvn/10_(1)(6).png",
+      "https://i.postimg.cc/1zj3sYKn/10_(1)(7).png",
+      "https://i.postimg.cc/5tR2bkmQ/10_(1)(8).png",
+      "https://i.postimg.cc/k4RX4FjS/10_(1)(9).png",
+    ];
+
+    const conceptItems = [
+      {
+        title: "Serie inmersiva",
+        text: "Formato tipo show premium para documentar la excelencia culinaria.",
+        emoji: "🎬",
+      },
+      {
+        title: "Guía de élite",
+        text: "Una ruta curada que conecta a los paladares más exigentes con las mejores historias.",
+        emoji: "👑",
+      },
+      {
+        title: "Audiencia real",
+        text: "Impacto directo en comunidad local, turismo y percepción aspiracional.",
+        emoji: "✨",
+      },
+    ];
+
+    const experienceItems = [
+      {
+        title: "Gastronomía",
+        text: "El producto se muestra con intención visual y apetito real.",
+        emoji: "🍽️",
+      },
+      {
+        title: "Ambiente",
+        text: "Capturamos energía, música, montaje, servicio y mood.",
+        emoji: "📸",
+      },
+      {
+        title: "Percepción",
+        text: "Elevamos cómo se siente la marca ante quien la descubre.",
+        emoji: "⚡",
+      },
+    ];
+
+    const eliteItems = [
+      {
+        title: "Restaurant Week",
+        text: "Pase directo y prioritario para protagonizar una futura edición especial.",
+      },
+      {
+        title: "Gala VIP de cierre",
+        text: "Presencia junto a líderes del sector lujo y marcas con visión.",
+      },
+      {
+        title: "Universo Amicabo",
+        text: "La marca entra a un ecosistema, no a una colaboración aislada.",
+      },
+    ];
+
+    const cinemaPoints = [
+      "Pieza cinematográfica con narrativa de marca",
+      "Ambiente real, no promo genérica",
+      "Mayor percepción de valor y sofisticación",
+      "Contenido pensado para ser presentado y compartido",
+    ];
+
+    const baseFeatures = [
+      "Episodio inmersivo de la serie",
+      "10,000 vistas mínimas garantizadas",
+      "Sesión B-Roll para reuso de material",
+      "Acceso a Restaurant Week y Gala VIP",
+      "1 mes dentro del ecosistema Amicabo",
+    ];
+
+    const plusFeatures = [
+      "1 mes de presencia gratis con historias, encuestas y dinámicas",
+      "Reel vertical extra para viralidad agresiva",
+      "Nota en carrusel editorial con autoridad periodística",
+      "Patrocinio humanitario oficial en activaciones comunitarias",
+      "Todo lo incluido en Ruta Base",
+    ];
+
+    const comparison = [
+      ["Episodio serie inmersiva", "✓", "✓"],
+      ["Sesión B-Roll / clips pro", "✓", "✓"],
+      ["1 mes de presencia en ecosistema", "Incluido", "Reforzado"],
+      ["Restaurant Week + Gala VIP", "✓", "✓"],
+      ["Reel viral extra + nota carrusel", "—", "✓"],
+      ["Patrocinio humanitario oficial", "—", "✓"],
+    ];
+
+    function Section({ id, children, extra = "" }) {
+      return (
+        <section id={id} className={`section-min relative overflow-hidden px-5 py-12 md:px-10 lg:px-16 ${extra}`}>
+          <div className="absolute inset-0 bg-main"></div>
+          <div className="grid-overlay absolute inset-0"></div>
+          <div className="relative z-10 mx-auto max-w-7xl">{children}</div>
+        </section>
+      );
+    }
+
+    function Badge({ children }) {
+      return (
+        <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-[11px] uppercase tracking-[0.25em] text-white/70">
+          {children}
+        </div>
+      );
+    }
+
+    function Button({ children, href = "#", solid = true }) {
+      return (
+        <a
+          href={href}
+          className={`inline-flex items-center justify-center rounded-full px-5 py-3 text-sm font-semibold transition ${solid ? "bg-white text-black hover:bg-white/90" : "border border-white/15 bg-white/5 text-white hover:bg-white/10"}`}
+        >
+          {children}
+        </a>
+      );
+    }
+
+    function CheckItem({ children }) {
+      return (
+        <div className="flex items-start gap-3 rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3">
+          <div className="mt-1 flex h-5 w-5 items-center justify-center rounded-full border border-white/10 bg-white/5 text-[11px]">✓</div>
+          <p className="text-sm leading-6 text-white/80">{children}</p>
+        </div>
+      );
+    }
+
+    function ImageCard({ src, alt, className = "" }) {
+      return (
+        <div className={`img-card relative overflow-hidden rounded-[1.75rem] border border-white/10 bg-white/[0.04] ${className}`}>
+          <img src={src} alt={alt} className="h-full w-full object-cover" loading="lazy" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/10 to-transparent"></div>
+        </div>
+      );
+    }
+
+    function TitleBlock({ eyebrow, title, subtitle, center = false }) {
+      return (
+        <div className={`fade-up max-w-3xl ${center ? "mx-auto text-center" : ""}`}>
+          <Badge>{eyebrow}</Badge>
+          <h2 className="mt-5 text-4xl font-semibold leading-tight text-white md:text-6xl">{title}</h2>
+          <p className="mt-5 max-w-2xl text-base leading-7 text-white/70 md:text-lg">{subtitle}</p>
+        </div>
+      );
+    }
+
+    function FeatureCard({ emoji, title, text }) {
+      return (
+        <div className="fade-up glass rounded-[1.75rem] border border-white/10 p-6">
+          <div className="mb-4 text-3xl">{emoji}</div>
+          <h3 className="text-xl font-semibold text-white">{title}</h3>
+          <p className="mt-3 text-sm leading-6 text-white/70">{text}</p>
+        </div>
+      );
+    }
+
+    function App() {
+      return (
+        <div className="bg-[#05070b] text-white">
+          <div className="fixed inset-x-0 top-0 z-40 border-b border-white/10 bg-black/35 backdrop-blur-xl">
+            <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 md:px-8">
+              <div>
+                <div className="text-[11px] uppercase tracking-[0.35em] text-white/45">Amicabo</div>
+                <div className="text-sm font-medium text-white/85">Ruta Gastronómica · GitHub Ready</div>
+              </div>
+              <div className="hidden rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-white/60 md:block">
+                Los Cabos · Premium Pitch
+              </div>
+            </div>
+          </div>
+
+          <Section id="portada" extra="pt-28 md:pt-32">
+            <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr]">
+              <div className="fade-up">
+                <Badge>Pitch Deck 2026</Badge>
+                <h1 className="mt-5 text-5xl font-semibold leading-[0.95] md:text-7xl lg:text-8xl">Ruta Gastronómica Amicabo</h1>
+                <p className="mt-6 max-w-2xl text-lg leading-8 text-white/70 md:text-xl">
+                  La evolución del marketing culinario en Los Cabos: presencia, prestigio e impacto.
+                </p>
+                <div className="mt-8 flex flex-wrap gap-3">
+                  <div className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-white/80">Showcase Gastronómico Premium</div>
+                  <div className="rounded-full border border-amber-300/20 bg-amber-300/10 px-4 py-2 text-sm text-amber-100">Presencia · Prestigio · Impacto</div>
+                </div>
+                <div className="mt-10 flex flex-wrap gap-4">
+                  <Button href="#base">Ver oferta</Button>
+                  <Button href="#concepto" solid={false}>Ver narrativa</Button>
+                </div>
+              </div>
+
+              <div className="fade-up delay-1">
+                <div className="rounded-[2rem] border border-white/10 bg-white/[0.03] p-3 shadow-2xl shadow-black/40 md:p-4">
+                  <ImageCard src={galleryImages[0]} alt="Visual principal Ruta Amicabo" className="aspect-[10/13] md:aspect-[4/5]" />
+                  <div className="mt-3 rounded-[1.5rem] border border-white/10 bg-black/25 p-4">
+                    <div className="text-xs uppercase tracking-[0.25em] text-white/45">Visual principal</div>
+                    <p className="mt-2 text-sm leading-6 text-white/75">Una presencia visual fuerte para abrir la propuesta con una sensación premium, gastronómica y aspiracional.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Section>
+
+          <Section id="movimiento" extra="pt-24 md:pt-28">
+            <div className="grid items-center gap-8 lg:grid-cols-[1fr_0.92fr]">
+              <div>
+                <TitleBlock
+                  eyebrow="Ecosistema Vivo"
+                  title="No es solo promoción. Es entrar al movimiento."
+                  subtitle="Nuestra presencia recorre Los Cabos generando una red de autoridad. Cuando un restaurante entra, entra con visibilidad real, narrativa premium y conexión regional."
+                />
+                <div className="mt-6 grid gap-4 fade-up delay-1">
+                  <CheckItem>Presencia física y digital constante en la región</CheckItem>
+                  <CheckItem>Percepción de autoridad dentro del ecosistema Amicabo</CheckItem>
+                  <CheckItem>Visibilidad que se siente como acceso, no como publicidad</CheckItem>
+                  <div className="rounded-[2rem] border border-white/10 bg-gradient-to-br from-amber-200/10 via-white/[0.04] to-pink-300/10 p-6">
+                    <div className="text-xs uppercase tracking-[0.25em] text-white/45">Llave maestra</div>
+                    <p className="mt-3 text-2xl font-medium leading-9 text-white">Entrar a la Ruta es ganar acceso a una conversación con prestigio acumulado.</p>
+                  </div>
+                </div>
+              </div>
+              <div className="fade-up delay-2">
+                <ImageCard src={galleryImages[1]} alt="Visual del movimiento Ruta Amicabo" className="aspect-[10/12] md:aspect-[5/6]" />
+              </div>
+            </div>
+          </Section>
+
+          <Section id="concepto" extra="pt-24 md:pt-28">
+            <TitleBlock
+              eyebrow="Concepto"
+              title="¿Qué es la Ruta Amicabo?"
+              subtitle="Una experiencia curada que convierte restaurantes en protagonistas de una serie inmersiva diseñada para audiencia local, turística y aspiracional."
+            />
+            <div className="mt-10 grid gap-5 md:grid-cols-3">
+              {conceptItems.map((item, index) => (
+                <div key={item.title} className={index === 1 ? "delay-1" : index === 2 ? "delay-2" : ""}>
+                  <FeatureCard {...item} />
+                </div>
+              ))}
+            </div>
+          </Section>
+
+          <Section id="cine" extra="pt-24 md:pt-28">
+            <div className="grid items-center gap-8 lg:grid-cols-[0.95fr_1.05fr]">
+              <div>
+                <TitleBlock
+                  eyebrow="Visual Storytelling"
+                  title="Cine, no publicidad."
+                  subtitle="No hacemos comerciales planos. Construimos piezas que elevan el estatus del restaurante y lo hacen sentirse parte de algo grande."
+                />
+                <div className="mt-8 grid gap-3 fade-up delay-1">
+                  {cinemaPoints.map((point) => (
+                    <div key={point} className="rounded-3xl border border-white/10 bg-white/[0.04] px-5 py-4 text-base text-white/85">{point}</div>
+                  ))}
+                </div>
+              </div>
+              <div className="fade-up delay-2">
+                <ImageCard src={galleryImages[2]} alt="Visual cinematográfico de la Ruta" className="aspect-[10/12] md:aspect-[5/6]" />
+              </div>
+            </div>
+          </Section>
+
+          <Section id="conexion" extra="pt-24 md:pt-28">
+            <div className="grid items-center gap-10 lg:grid-cols-2">
+              <div className="fade-up glass rounded-[2rem] border border-white/10 p-7 md:p-10">
+                <div className="text-sm uppercase tracking-[0.25em] text-white/45">Confianza inmediata</div>
+                <p className="mt-4 text-3xl font-medium leading-tight text-white md:text-4xl">La audiencia conecta con personas, emociones y contexto. No solo con un platillo bonito.</p>
+              </div>
+              <TitleBlock
+                eyebrow="Factor Humano"
+                title="Conexión real que genera confianza."
+                subtitle="Host, narrativa y emoción para transmitir la pasión y el alma de la cocina. La gente no solo ve un lugar: siente por qué debería ir."
+              />
+            </div>
+          </Section>
+
+          <Section id="experiencia" extra="pt-24 md:pt-28">
+            <div className="grid items-center gap-8 lg:grid-cols-[1fr_0.92fr]">
+              <div>
+                <TitleBlock
+                  eyebrow="Estilo de Vida"
+                  title="Transmitimos el vibe completo."
+                  subtitle="Ambiente, energía, propuesta gastronómica y percepción de marca en una sola pieza. Hacemos que el espectador quiera sentarse en la mesa antes de llegar."
+                />
+                <div className="mt-10 grid gap-5 md:grid-cols-3">
+                  {experienceItems.map((item, index) => (
+                    <div key={item.title} className={index === 1 ? "delay-1" : index === 2 ? "delay-2" : ""}>
+                      <FeatureCard {...item} />
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="fade-up delay-2">
+                <ImageCard src={galleryImages[3]} alt="Visual de experiencia total de la ruta" className="aspect-[10/12] md:aspect-[5/6]" />
+              </div>
+            </div>
+          </Section>
+
+          <Section id="elite" extra="pt-24 md:pt-28">
+            <div className="grid items-center gap-10 lg:grid-cols-[0.9fr_1.1fr]">
+              <TitleBlock
+                eyebrow="Privilegios de Élite"
+                title="La ruta no termina en el video."
+                subtitle="La participación abre acceso prioritario a futuros momentos de alto valor dentro del universo Amicabo."
+              />
+              <div className="grid gap-4">
+                {eliteItems.map((item, i) => (
+                  <div key={item.title} className={`fade-up ${i === 1 ? "delay-1" : i === 2 ? "delay-2" : ""} rounded-[2rem] border border-white/10 bg-white/[0.04] p-6 md:p-7`}>
+                    <div className="text-xs uppercase tracking-[0.3em] text-white/35">0{i + 1}</div>
+                    <h3 className="mt-3 text-2xl font-medium text-white">{item.title}</h3>
+                    <p className="mt-3 text-sm leading-6 text-white/70">{item.text}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </Section>
+
+          <Section id="impacto" extra="pt-24 md:pt-28">
+            <div className="grid items-center gap-8 lg:grid-cols-[1fr_0.95fr]">
+              <div>
+                <TitleBlock
+                  eyebrow="Propósito de Marca"
+                  title="Impacto social que también construye estatus."
+                  subtitle="La marca se vincula con activaciones comunitarias y ayuda humanitaria impulsadas por Amicabo. Hoy la empatía también posiciona."
+                />
+                <div className="fade-up delay-1 mt-6 rounded-[2rem] border border-white/10 bg-gradient-to-br from-emerald-300/10 via-white/[0.04] to-white/[0.03] p-8">
+                  <p className="text-3xl font-medium leading-tight text-white md:text-4xl">El consumidor actual también elige marcas con empatía real.</p>
+                  <p className="mt-4 text-base leading-7 text-white/70">Al integrarse a las activaciones comunitarias de Amicabo, el restaurante no solo gana exposición: gana posicionamiento humano y legitimidad social.</p>
+                </div>
+              </div>
+              <div className="fade-up delay-2">
+                <ImageCard src={galleryImages[4]} alt="Visual de impacto social y posicionamiento" className="aspect-[10/12] md:aspect-[5/6]" />
+              </div>
+            </div>
+          </Section>
+
+          <Section id="base" extra="pt-24 md:pt-28">
+            <div className="grid items-center gap-8 lg:grid-cols-[0.85fr_1.15fr]">
+              <TitleBlock
+                eyebrow="Oferta Base"
+                title="$6,500 MXN"
+                subtitle="Una entrada fuerte al ecosistema con pieza inmersiva, presencia de marca y elementos concretos para generar autoridad y tráfico."
+              />
+              <div className="fade-up delay-1 overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.04]">
+                <div className="border-b border-white/10 bg-gradient-to-r from-white/10 to-white/[0.03] p-6 md:p-8">
+                  <div className="text-sm uppercase tracking-[0.25em] text-white/45">Incluye</div>
+                  <div className="mt-2 text-3xl font-semibold text-white md:text-4xl">Presencia premium de entrada</div>
+                </div>
+                <div className="grid gap-3 p-6 md:p-8">
+                  {baseFeatures.map((item) => <CheckItem key={item}>{item}</CheckItem>)}
+                </div>
+              </div>
+            </div>
+          </Section>
+
+          <Section id="plus" extra="pt-24 md:pt-28">
+            <div className="grid items-center gap-8 lg:grid-cols-[0.85fr_1.15fr]">
+              <TitleBlock
+                eyebrow="Premium"
+                title="Ruta Amicabo PLUS · $10,000"
+                subtitle="Más presencia, más agresividad de alcance, más percepción editorial y una capa extra de autoridad para dominar la conversación."
+              />
+              <div className="fade-up delay-1 overflow-hidden rounded-[2rem] border border-amber-200/20 bg-gradient-to-br from-amber-300/10 via-white/[0.04] to-pink-400/10">
+                <div className="border-b border-white/10 p-6 md:p-8">
+                  <div className="inline-flex rounded-full border border-amber-100/20 bg-amber-100/10 px-4 py-2 text-xs uppercase tracking-[0.25em] text-amber-50">Nivel estratégico superior</div>
+                  <div className="mt-4 text-3xl font-semibold text-white md:text-4xl">Más frecuencia, más autoridad, más conversación</div>
+                </div>
+                <div className="grid gap-3 p-6 md:p-8">
+                  {plusFeatures.map((item) => <CheckItem key={item}>{item}</CheckItem>)}
+                </div>
+              </div>
+            </div>
+          </Section>
+
+          <Section id="comparativo" extra="pt-24 md:pt-28">
+            <TitleBlock
+              eyebrow="Cuadro de Valor"
+              title="Base vs PLUS"
+              subtitle="Ambos paquetes posicionan. PLUS amplifica la frecuencia, el prestigio y la percepción de inversión inteligente."
+            />
+            <div className="fade-up delay-1 mt-10 overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.04]">
+              <div className="grid grid-cols-[1.2fr_0.55fr_0.55fr] border-b border-white/10 bg-white/[0.03] p-4 text-sm font-medium text-white/70 md:p-6">
+                <div>Beneficio estratégico</div>
+                <div className="text-center">Base</div>
+                <div className="text-center">PLUS</div>
+              </div>
+              {comparison.map((row) => (
+                <div key={row[0]} className="grid grid-cols-[1.2fr_0.55fr_0.55fr] items-center border-b border-white/10 p-4 text-sm md:p-6">
+                  <div className="pr-4 text-white/85">{row[0]}</div>
+                  <div className="text-center text-white/80">{row[1]}</div>
+                  <div className="text-center text-amber-100">{row[2]}</div>
+                </div>
+              ))}
+            </div>
+          </Section>
+
+          <Section id="cierre" extra="pt-24 md:pt-28">
+            <div className="grid items-center gap-8 lg:grid-cols-[0.9fr_1.1fr]">
+              <div className="fade-up delay-1">
+                <ImageCard src={galleryImages[5]} alt="Visual final Ruta Amicabo" className="aspect-[10/12] md:aspect-[5/6]" />
+              </div>
+              <div>
+                <TitleBlock
+                  eyebrow="Estatus Final"
+                  title="Tu legado empieza cuando tu marca entra en movimiento."
+                  subtitle="Estar en Amicabo es posicionarte como una marca activa en el desarrollo, la experiencia y la conversación premium de Los Cabos."
+                />
+                <div className="fade-up delay-2 mt-8 rounded-[2rem] border border-white/10 bg-gradient-to-br from-white/[0.06] via-white/[0.04] to-amber-200/10 p-8 md:p-10">
+                  <p className="text-3xl font-semibold leading-tight text-white md:text-5xl">El siguiente capítulo de tu éxito comienza aquí.</p>
+                  <p className="mt-5 max-w-2xl text-base leading-7 text-white/70 md:text-lg">Ruta Amicabo no vende solo contenido: vende percepción, acceso, narrativa y posicionamiento dentro de la conversación premium de Los Cabos.</p>
+                  <div className="mt-8 flex flex-wrap gap-3">
+                    <Button href="#portada">Volver al inicio</Button>
+                    <Button href="#base" solid={false}>Ver paquetes</Button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Section>
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+  </script>
+</body>
+</html>
